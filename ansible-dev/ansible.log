@@ -1,0 +1,44 @@
+2024-10-06 20:07:08,213 p=15522 u=ec2-user n=ansible | 172.31.27.78 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.7"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2024-10-06 20:07:08,254 p=15522 u=ec2-user n=ansible | 172.31.29.139 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2024-10-06 20:07:53,370 p=15717 u=ec2-user n=ansible | PLAY [all] ****************************************************************************************
+2024-10-06 20:07:53,382 p=15717 u=ec2-user n=ansible | TASK [Gathering Facts] ****************************************************************************
+2024-10-06 20:07:55,175 p=15717 u=ec2-user n=ansible | ok: [172.31.27.78]
+2024-10-06 20:07:55,926 p=15717 u=ec2-user n=ansible | ok: [172.31.29.139]
+2024-10-06 20:07:55,946 p=15717 u=ec2-user n=ansible | TASK [Create a file] ******************************************************************************
+2024-10-06 20:07:56,534 p=15717 u=ec2-user n=ansible | changed: [172.31.29.139]
+2024-10-06 20:07:56,786 p=15717 u=ec2-user n=ansible | changed: [172.31.27.78]
+2024-10-06 20:07:56,793 p=15717 u=ec2-user n=ansible | TASK [check something] ****************************************************************************
+2024-10-06 20:07:57,358 p=15717 u=ec2-user n=ansible | fatal: [172.31.29.139]: FAILED! => {"changed": false, "cmd": "jakdfhdfd", "msg": "[Errno 2] No such file or directory: b'jakdfhdfd': b'jakdfhdfd'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2024-10-06 20:07:57,359 p=15717 u=ec2-user n=ansible | ...ignoring
+2024-10-06 20:07:57,404 p=15717 u=ec2-user n=ansible | fatal: [172.31.27.78]: FAILED! => {"changed": false, "cmd": "jakdfhdfd", "msg": "[Errno 2] No such file or directory: b'jakdfhdfd': b'jakdfhdfd'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+2024-10-06 20:07:57,404 p=15717 u=ec2-user n=ansible | ...ignoring
+2024-10-06 20:07:57,410 p=15717 u=ec2-user n=ansible | TASK [Create a directory] *************************************************************************
+2024-10-06 20:07:57,782 p=15717 u=ec2-user n=ansible | ok: [172.31.29.139]
+2024-10-06 20:07:57,888 p=15717 u=ec2-user n=ansible | ok: [172.31.27.78]
+2024-10-06 20:07:57,896 p=15717 u=ec2-user n=ansible | TASK [Create group] *******************************************************************************
+2024-10-06 20:07:58,405 p=15717 u=ec2-user n=ansible | ok: [172.31.29.139]
+2024-10-06 20:07:58,466 p=15717 u=ec2-user n=ansible | ok: [172.31.27.78]
+2024-10-06 20:07:58,475 p=15717 u=ec2-user n=ansible | TASK [Create user Serge] **************************************************************************
+2024-10-06 20:07:58,512 p=15717 u=ec2-user n=ansible | skipping: [172.31.27.78]
+2024-10-06 20:07:58,521 p=15717 u=ec2-user n=ansible | skipping: [172.31.29.139]
+2024-10-06 20:07:58,528 p=15717 u=ec2-user n=ansible | TASK [Check uptime] *******************************************************************************
+2024-10-06 20:07:58,931 p=15717 u=ec2-user n=ansible | changed: [172.31.29.139]
+2024-10-06 20:07:59,031 p=15717 u=ec2-user n=ansible | changed: [172.31.27.78]
+2024-10-06 20:07:59,045 p=15717 u=ec2-user n=ansible | TASK [Check the date] *****************************************************************************
+2024-10-06 20:07:59,441 p=15717 u=ec2-user n=ansible | changed: [172.31.29.139]
+2024-10-06 20:07:59,496 p=15717 u=ec2-user n=ansible | changed: [172.31.27.78]
+2024-10-06 20:07:59,516 p=15717 u=ec2-user n=ansible | PLAY RECAP ****************************************************************************************
+2024-10-06 20:07:59,517 p=15717 u=ec2-user n=ansible | 172.31.27.78               : ok=7    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=1   
+2024-10-06 20:07:59,517 p=15717 u=ec2-user n=ansible | 172.31.29.139              : ok=7    changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=1   
