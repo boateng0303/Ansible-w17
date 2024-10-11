@@ -4,7 +4,7 @@ pipeline {
     environment {
         // JFrog Artifactory credentials stored in Jenkins
         ARTIFACTORY_URL = 'http://184.73.68.163:8081/artifactory'
-        JROG_CRED = 'jfrog-cred'
+        JFROG_CRED = 'jfrog-cred' // Fixed variable name
         REPO = 'geolocation'
         ZIP_FILENAME = 'ansible-playbook.zip'
         REMOTE_PATH = '/home/ec2-user/ansible-dev'
@@ -12,9 +12,8 @@ pipeline {
         SSH_CREDENTIALS = 'master_ansible-cred'
         BRANCH_NAME = 'main'
         PROJECT_URL = 'https://github.com/boateng0303/Ansible-w17.git'
-        ARTIFACTPATH = 'target/*.zip'
-        ARTIFACTTARGETPATH = 'ansible-playbook_${BUILD_ID}'
-        
+        ARTIFACTPATH = '${ZIP_FILENAME}' // Fixed path to match your ZIP file
+        ARTIFACTTARGETPATH = 'ansible-playbook_${BUILD_ID}.zip' // Added .zip extension
     }
 
     stages {
@@ -30,27 +29,21 @@ pipeline {
             }
         }
 
-            stage('Upload Jar to Jfrog'){
-            steps{
+        stage('Upload ZIP to JFrog') {
+            steps {
                 withCredentials([usernamePassword(credentialsId: "${JFROG_CRED}", \
                  usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
                     script {
-                        // Define the artifact path and target location
-                        //def artifactPath = 'target/*.jar'
-                        //def targetPath = "release_${BUILD_ID}.jar"
-
                         // Upload the artifact using curl
                         sh """
                             curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} \
                                  -T ${ARTIFACTPATH} \
                                  ${ARTIFACTORY_URL}/${REPO}/${ARTIFACTTARGETPATH}
                         """
+                    }
+                }
             }
         }
-    }
-
-}
-
 
         stage('Deploy to Ansible Server') {
             steps {
@@ -63,7 +56,7 @@ pipeline {
 
     post {
         always {
-            cleanWs() // Clean up the workspace
+            cleanWs() // Clean up the workspace after build
         }
     }
 }
