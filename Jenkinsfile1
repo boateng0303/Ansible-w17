@@ -7,7 +7,6 @@ pipeline {
         SSH_CREDENTIALS = 'master_ansible-cred'
         BRANCH_NAME = 'main'
         PROJECT_URL = 'https://github.com/boateng0303/Ansible-w17.git'
-       
     }
 
     stages {
@@ -17,23 +16,20 @@ pipeline {
             }
         }
 
-        
-
-        
-
         stage('Run Ansible Playbook') {
             steps {
                 sshagent(credentials: [SSH_CREDENTIALS]) {
                     script {
                         // Run the playbook on the remote server
                         sh """
-                            ssh ec2-user@${ANSIBLE_SERVER} '
+                            ssh -o StrictHostKeyChecking=no ec2-user@${ANSIBLE_SERVER} "
                                 cd ${REMOTE_PATH} &&
                                 ansible-playbook -i inv.yml play2.yml
-                            '
+                            "
                         """
                     }
                 }
             }
         }
     }
+}
