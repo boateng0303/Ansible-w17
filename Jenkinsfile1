@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+     triggers {
+       cron('*/2 * * * *')  // Schedule to run every 5 minutes
+     }
+
+
     environment {
         REMOTE_PATH = '/home/ec2-user/ansible_dev'
         ANSIBLE_SERVER = '100.26.47.51'
