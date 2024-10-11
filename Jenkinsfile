@@ -45,18 +45,19 @@ pipeline {
             }
         }
 
-       stage('Deploy to Ansible Server') {
-            steps {
-                sshagent(credentials: [SSH_CREDENTIALS]) {
-                    script {
-                        // Using SSH with StrictHostKeyChecking disabled
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@${ANSIBLE_SERVER} 'echo Connected'"
-                        sh "scp -o StrictHostKeyChecking=no ${ZIP_FILENAME} ec2-user@${ANSIBLE_SERVER}:${REMOTE_PATH}/"
-                    }
-                }
+      stage('Deploy to Ansible Server') {
+        steps {
+        sshagent(credentials: [SSH_CREDENTIALS]) {
+            script {
+                // Using SSH with StrictHostKeyChecking disabled
+                sh "ssh -o StrictHostKeyChecking=no ec2-user@${ANSIBLE_SERVER} 'echo Connected'"
+                
+                // Specify the destination filename
+                sh "scp -o StrictHostKeyChecking=no ${ZIP_FILENAME} ec2-user@${ANSIBLE_SERVER}:${REMOTE_PATH}/${ZIP_FILENAME}"
             }
         }
     }
+}
 
     post {
         always {
