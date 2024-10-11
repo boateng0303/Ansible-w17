@@ -28,7 +28,6 @@ pipeline {
                 sh 'zip -r ${ZIP_FILENAME} *'
             }
         }
-    }
 
         stage('Upload ZIP to JFrog') {
             steps {
@@ -53,7 +52,7 @@ pipeline {
                 }
             }
         }
-    
+    }
 
     post {
         always {
