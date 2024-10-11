@@ -12,6 +12,9 @@ pipeline {
         SSH_CREDENTIALS = 'master_ansible-cred'
         BRANCH_NAME = 'main'
         PROJECT_URL = 'https://github.com/boateng0303/Ansible-w17.git'
+        ARTIFACTPATH = 'target/*.zip'
+        ARTIFACTTARGETPATH = 'ansible-playbook_${BUILD_ID}'
+        
     }
 
     stages {
