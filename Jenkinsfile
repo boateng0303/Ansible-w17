@@ -46,13 +46,16 @@ pipeline {
         }
 
         stage('Deploy to Ansible Server') {
-            steps {
-                sshagent(credentials: [SSH_CREDENTIALS]) {
-                    sh "scp ${ZIP_FILENAME} ec2-user@${ANSIBLE_SERVER}:${REMOTE_PATH}/"
-                }
+    steps {
+        sshagent(credentials: [SSH_CREDENTIALS]) {
+            script {
+                // Using SSH with StrictHostKeyChecking disabled
+                sh "ssh -o StrictHostKeyChecking=no ec2-user@${ANSIBLE_SERVER} 'echo Connected'"
+                sh "scp -o StrictHostKeyChecking=no ${ZIP_FILENAME} ec2-user@${ANSIBLE_SERVER}:${REMOTE_PATH}/"
             }
         }
     }
+}
 
     post {
         always {
