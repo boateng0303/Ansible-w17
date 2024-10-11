@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     environment {
-        // JFrog Artifactory credentials stored in Jenkins
+       
         ARTIFACTORY_URL = 'http://184.73.68.163:8081/artifactory'
         JFROG_CRED = 'jfrog-cred' 
         REPO = 'geolocation'
         ZIP_FILENAME = 'ansible-playbook.zip'
-        REMOTE_PATH = '/home/ec2-user/ansible-dev'
+        REMOTE_PATH = '/home/ec2-user/ansible_dev'
         ANSIBLE_SERVER = '52.7.22.161'
         SSH_CREDENTIALS = 'master_ansible-cred'
         BRANCH_NAME = 'main'
