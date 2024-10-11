@@ -2,7 +2,7 @@ pipeline {
     agent any
 
      triggers {
-       cron('*/2 * * * *')  // Schedule to run every 5 minutes
+           cron('*/2 * * * *')  // Schedule to run every 5 minutes
      }
 
 
