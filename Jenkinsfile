@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // JFrog Artifactory credentials stored in Jenkins
-        ARTIFACTORY_URL = 'http://184.73.68.163:8081/artifactory/'
+        ARTIFACTORY_URL = 'http://184.73.68.163:8081/artifactory'
         JROG_CRED = 'jfrog-cred'
         REPO = 'geolocation'
         ZIP_FILENAME = 'ansible-playbook.zip'
