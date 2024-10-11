@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    environment {
+        REMOTE_PATH = '/home/ec2-user/ansible_dev'
+        ANSIBLE_SERVER = '100.26.47.51'
+        SSH_CREDENTIALS = 'master_ansible-cred'
+        BRANCH_NAME = 'main'
+        PROJECT_URL = 'https://github.com/boateng0303/Ansible-w17.git'
+       
+    }
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git branch: "${BRANCH_NAME}", url: "${PROJECT_URL}"
+            }
+        }
+
+        
+
+        
+
+        stage('Run Ansible Playbook') {
+            steps {
+                sshagent(credentials: [SSH_CREDENTIALS]) {
+                    script {
+                        // Run the playbook on the remote server
+                        sh """
+                            ssh ec2-user@${ANSIBLE_SERVER} '
+                                cd ${REMOTE_PATH} &&
+                                ansible-playbook -i inv.yml play2.yml
+                            '
+                        """
+                    }
+                }
+            }
+        }
+    }
