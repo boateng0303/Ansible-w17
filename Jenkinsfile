@@ -4,7 +4,7 @@ pipeline {
     environment {
         // JFrog Artifactory credentials stored in Jenkins
         ARTIFACTORY_URL = 'http://184.73.68.163:8081/artifactory/'
-        ARTIFACTORY_CREDENTIALS = credentials( 'jfrog-cred')
+        ARTIFACTORY_CREDENTIALS = credentials('jfrog-cred')
         ARTIFACTORY_REPO = 'geolocation'
         ZIP_FILENAME = 'ansible-playbook.zip'
         REMOTE_PATH = '/home/ec2-user/ansible-dev'
@@ -14,15 +14,12 @@ pipeline {
         PROJECT_URL = 'https://github.com/boateng0303/Ansible-w17.git'
     }
 
-     stages{
-        stage('Git Checkout'){
-            steps{
-                git branch: "${BRANCH_NAME}", \
-                url: "${PROJECT_URL}"
-          
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git branch: "${BRANCH_NAME}", url: "${PROJECT_URL}"
             }
         }
-
 
         stage('Package Ansible Playbook') {
             steps {
@@ -33,7 +30,7 @@ pipeline {
         stage('Upload to JFrog') {
             steps {
                 script {
-                    def server = Artifactory.server 'artifactory-instance'
+                    def server = Artifactory.newServer(url: ARTIFACTORY_URL, credentialsId: ARTIFACTORY_CREDENTIALS)
                     def uploadSpec = """{
                         "files": [
                             {
@@ -56,4 +53,9 @@ pipeline {
         }
     }
 
-   
+    post {
+        always {
+            cleanWs() // Clean up the workspace
+        }
+    }
+}
