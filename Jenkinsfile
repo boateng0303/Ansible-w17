@@ -4,7 +4,7 @@ pipeline {
     environment {
         // JFrog Artifactory credentials stored in Jenkins
         ARTIFACTORY_URL = 'http://184.73.68.163:8081/artifactory/'
-        ARTIFACTORY_CREDENTIALS = credentials('jfrog-cred')
+       JROG_CRED = 'jfrog-cred'
         ARTIFACTORY_REPO = 'geolocation'
         ZIP_FILENAME = 'ansible-playbook.zip'
         REMOTE_PATH = '/home/ec2-user/ansible-dev'
@@ -27,22 +27,27 @@ pipeline {
             }
         }
 
-        stage('Upload to JFrog') {
-            steps {
-                script {
-                    def server = Artifactory.newServer(url: ARTIFACTORY_URL, credentialsId: ARTIFACTORY_CREDENTIALS)
-                    def uploadSpec = """{
-                        "files": [
-                            {
-                                "pattern": "${ZIP_FILENAME}",
-                                "target": "${ARTIFACTORY_REPO}/"
-                            }
-                        ]
-                    }"""
-                    server.upload(uploadSpec)
-                }
+            stage('Upload Jar to Jfrog'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: "${JFROG_CRED}", \
+                 usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                    script {
+                        // Define the artifact path and target location
+                        //def artifactPath = 'target/*.jar'
+                        //def targetPath = "release_${BUILD_ID}.jar"
+
+                        // Upload the artifact using curl
+                        sh """
+                            curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} \
+                                 -T ${ARTIFACTPATH} \
+                                 ${ARTIFACTORY_URL}/${REPO}/${ARTIFACTTARGETPATH}
+                        """
             }
         }
+    }
+
+}
+
 
         stage('Deploy to Ansible Server') {
             steps {
